@@ -19,22 +19,7 @@ public class CalculateController {
     }
     @GetMapping("/calculate")
     public String calculate(@RequestParam double number1, @RequestParam double number2, @RequestParam String calculate, Model model){
-
-        double result = 0;
-        switch (calculate){
-            case "+":
-                 result = calculateService.plus(number1,number2);
-                break;
-            case "-":
-                result = calculateService.minus(number1,number2);
-                break;
-            case "*":
-                result = calculateService.multiply(number1,number2);
-                break;
-            case "/":
-                result = calculateService.share(number1,number2);
-                break;
-        }
+        double result = calculateService.calculate(number1,number2,calculate);
             model.addAttribute("result",result);
         return "index";
     }

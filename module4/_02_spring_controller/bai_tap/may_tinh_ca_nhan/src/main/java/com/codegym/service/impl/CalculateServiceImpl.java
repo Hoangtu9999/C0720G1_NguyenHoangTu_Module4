@@ -5,23 +5,37 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CalculateServiceImpl implements CalculateService {
-    @Override
-    public double plus(double a, double b) {
-        return a + b;
-    }
 
     @Override
-    public double minus(double a, double b) {
-        return a - b;
+    public double calculate(double number1, double number2, String calculate) {
+        double result = 0;
+        switch (calculate){
+            case "+":
+                result = plus(number1,number2);
+                break;
+            case "-":
+                result = minus(number1,number2);
+                break;
+            case "*":
+                result = multiply(number1,number2);
+                break;
+            case "/":
+                result = share(number1,number2);
+                break;
+        }
+        return result;
     }
 
-    @Override
-    public double multiply(double a, double b) {
-        return a * b;
+    private double plus(double number1, double number2) {
+        return number1 + number2;
     }
-
-    @Override
-    public double share(double a, double b) {
-        return a / b;
+    private double minus(double number1, double number2) {
+        return number1 - number2;
+    }
+    private double multiply(double number1, double number2) {
+        return number1 * number2;
+    }
+    private double share(double number1, double number2) {
+        return number1 / number2;
     }
 }
