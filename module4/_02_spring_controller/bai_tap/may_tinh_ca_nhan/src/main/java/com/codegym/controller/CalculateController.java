@@ -13,14 +13,15 @@ public class CalculateController {
     @Autowired
     private CalculateService calculateService;
 
-    @GetMapping({"","/index"})
-    public String home(){
+    @GetMapping({"", "/index"})
+    public String home() {
         return "index";
     }
+
     @GetMapping("/calculate")
-    public String calculate(@RequestParam double number1, @RequestParam double number2, @RequestParam String calculate, Model model){
-        double result = calculateService.calculate(number1,number2,calculate);
-            model.addAttribute("result",result);
+    public String calculate(@RequestParam double number1, @RequestParam double number2, @RequestParam String calculate, Model model) {
+        double result = calculateService.calculate(number1, number2, calculate);
+        model.addAttribute("result", result);
         return "index";
     }
 }
