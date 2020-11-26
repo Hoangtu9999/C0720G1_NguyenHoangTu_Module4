@@ -17,6 +17,7 @@
 <form:form action="create" method="get" modelAttribute="emailObj">
     <form:label path="languages">Languages:</form:label>
     <form:select path="languages">
+        <form:option value="">----Languages-----</form:option>
         <form:option value="English">English</form:option>
         <form:option value="Vietnamese">Vietnamese</form:option>
         <form:option value="Chinese">Chinese</form:option>
@@ -25,6 +26,7 @@
     </br>
     <form:label path="pageSize">Page Size</form:label>
     <form:select path="pageSize">
+        <form:option value="25">--------------</form:option>
         <form:option value="25">25</form:option>
         <form:option value="50">50</form:option>
         <form:option value="75">75</form:option>
