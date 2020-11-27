@@ -29,7 +29,7 @@ public class ProductController {
     }
     @PostMapping("/product/create")
     public String create(@ModelAttribute Product product, RedirectAttributes redirect){
-    product.setId((int) (Math.random() * 100));
+
     productService.create(product);
     redirect.addFlashAttribute("message","more success!");
     return "redirect:/";
