@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:include="views/layout :: head">
+<!--</head>-->
+<body>
+<h3>Products</h3>
+<p>
+    <a th:href="@{/blog/form-create}">
+        Add new product
+    </a>
+</p>
+<div class="notify">
+    <div th:if="${message}">
+        <span style="color: #45a049" th:text="${message}"></span>
+    </div>
+</div>
+<table id = "customers">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Title</th>
+        <th>Connect</th>
+        <th>Post Date</th>
+        <th>Name Of Birth</th>
+        <th>Edit</th>
+        <th>Delete</th>
+        <th>View</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="row : ${blogList}">
+        <td th:text="${row.getId()}"></td>
+        <td th:text="${row.getName()}"></td>
+        <td th:text="${row.getTitle()}"></td>
+        <td th:text="${row.getContent()}"></td>
+        <td th:text="${row.getPostDate()}"></td>
+        <td th:text="${row.getNameOfPost()}"></td>
+        <td><a th:href="@{/blog/form-edit/{id}(id=${row.getId()})}">edit</a></td>
+        <td><a th:href="@{/blog/delete/{id}(id=${row.getId()})}">delete</a></td>
+        <td><a th:href="@{/blog/view/{id}(id=${row.getId()})}">view</a></td>
+    </tr>
+    </tbody>
+</table>
+<footer th:replace="views/layout :: footer"></footer>
+</body>
+</html>
