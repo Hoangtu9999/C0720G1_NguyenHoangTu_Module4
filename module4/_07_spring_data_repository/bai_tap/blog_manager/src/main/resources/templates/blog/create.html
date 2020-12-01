@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head"></head>
+<body>
+<h3 style="background-color: darkgray; color: black">Add blog</h3>
+<p>
+    <a th:href="@{/}">
+        Back to customer list
+    </a>
+</p>
+<form th:action="@{/blog/create}" th:object="${blog}"
+      method="POST" novalidate="novalidate" class="form">
+    <input type="hidden" th:field="*{id}"/>
+    <div class="col-12 row">
+        <div class="form-group col-5">
+            <label for="exampleFormControlInput1">Name</label>
+            <input th:type="text" th:field="*{name}" class="form-control" id="exampleFormControlInput1"
+                   placeholder="Input name">
+        </div>
+        <div class="form-group col-5">
+            <label for="exampleFormControlInput2">Title</label>
+            <input th:type="text" th:field="*{title}" class="form-control" id="exampleFormControlInput2"
+                   placeholder="Input title">
+        </div>
+    </div>
+    <div class="col-12 row">
+        <div class="form-group col-5">
+            <label for="exampleFormControlInput3">Content</label>
+            <input th:type="text" th:field="*{content}" class="form-control" id="exampleFormControlInput3"
+                   placeholder="Input content">
+        </div>
+        <div class="form-group col-5">
+            <label for="exampleFormControlInput4">Date post</label>
+            <input th:type="text" th:field="*{postDate}" class="form-control" id="exampleFormControlInput4"
+                   placeholder="Input date post">
+        </div>
+    </div>
+    <div class="col-12 row">
+        <div class="form-group col-5">
+            <label for="exampleFormControlInput5">Name Of Post</label>
+            <input th:type="text" th:field="*{nameOfPost}" class="form-control" id="exampleFormControlInput5"
+                   placeholder="Input name of post">
+        </div>
+        <div class="form-group col-5">
+            <label for="exampleFormControlInput6">Danh mục</label>
+            <select id="exampleFormControlInput6" th:field="*{categoryEntity}" class="form-control">
+                <option th:each="row : ${categoryList}" th:value="${row.getId()}" th:text="${row.getName()}"></option>
+            </select>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+<footer th:replace="layout :: footer"></footer>
+</body>
+</html>

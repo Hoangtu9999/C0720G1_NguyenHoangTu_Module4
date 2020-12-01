@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:include="layout :: head">
+    <!--</head>-->
+<body>
+<div class="container-fluid">
+    <h3 style="background-color: darkgray; color: black;text-align: center">Category</h3>
+    <p>
+        <a th:href="@{/category/form-create}">
+            Add new product
+        </a>
+    </p>
+    <div class="notify">
+        <div th:if="${message}">
+            <span style="color: #45a049" th:text="${message}"></span>
+        </div>
+    </div>
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="row : ${categoryList}">
+            <td scope="row" th:text="${row.getId()}"></td>
+            <td th:text="${row.getName()}"th:href=""></td>
+            <td class="row">
+                <button type="button" class="btn btn-warning">
+                    <a th:href="@{/category/form-edit/{id}(id=${row.getId()})}" style="color: black"><i class="fas fa-edit"></i></a>
+                </button>
+                <button type="button" class="btn btn-danger">
+                    <a th:href="@{/category/delete/{id}(id=${row.getId()})}" style="color: black"><i class="fas fa-trash"></i></a>
+                </button>
+                <button type="button" class="btn btn-info">
+                    <a th:href="@{/category/view/{id}(id=${row.getId()})}" style="color: black"><i class="fas fa-align-justify"></i></a>
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <footer th:replace="layout :: footer"></footer>
+</div>
+</body>
+</html>

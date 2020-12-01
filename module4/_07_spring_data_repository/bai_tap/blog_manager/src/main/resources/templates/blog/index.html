@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:include="layout :: head">
+    <!--</head>-->
+<body>
+<div class="container-fluid">
+    <h3 style="background-color: darkgray; color: black;text-align: center">Blogs</h3>
+    <p>
+        <a th:href="@{/blog/form-create}">
+            Add new product
+        </a>
+    </p>
+    <form action="/blog">
+        <label>
+            <input type="text" name="keyword" th:value="${keywordOld}" />
+        </label>
+        <input type="submit" value="Search" />
+    </form><br>
+
+    <a th:href="@{/blog/sort}">Sort by Date Create</a>
+    <div class="notify">
+        <div th:if="${message}">
+            <span style="color: #45a049" th:text="${message}"></span>
+        </div>
+    </div>
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Title</th>
+            <th scope="col">Connect</th>
+            <th scope="col">Post Date</th>
+            <th scope="col">Name Of Birth</th>
+            <th scope="col">Category</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="row : ${blogEntityList}">
+            <td scope="row" th:text="${row.getId()}"></td>
+            <td th:text="${row.getName()}"></td>
+            <td th:text="${row.getTitle()}"></td>
+            <td th:text="${row.getContent()}"></td>
+            <td th:text="${row.getPostDate()}"></td>
+            <td th:text="${row.getNameOfPost()}"></td>
+            <td th:text="${row.getCategoryEntity().getName()}"></td>
+            <td class="row">
+                <button type="button" class="btn btn-warning">
+                    <a th:href="@{/blog/form-edit/{id}(id=${row.getId()})}" style="color: black"><i class="fas fa-edit"></i></a>
+                </button>
+                <button type="button" class="btn btn-danger">
+                    <a th:href="@{/blog/delete/{id}(id=${row.getId()})}" style="color: black"><i class="fas fa-trash"></i></a>
+                </button>
+                <button type="button" class="btn btn-info">
+                    <a th:href="@{/blog/view/{id}(id=${row.getId()})}" style="color: black"><i class="fas fa-align-justify"></i></a>
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+<!--    <nav aria-label="Page navigation example">-->
+<!--        <ul class="pagination justify-content-end">-->
+<!--            <li class="page-item ">-->
+<!--                <a th:if="${blogList.hasPrevious()}" class="page-link"-->
+<!--                   th:href="@{/blog/home(page = ${blogList.number - 1})}" tabindex="-1"-->
+<!--                   aria-disabled="true">Previous</a>-->
+<!--            </li>-->
+<!--            <li class="page-item"><a class="page-link" href="#">1</a></li>-->
+<!--            <li class="page-item">-->
+<!--                <a th:if="${blogList.hasNext()}" class="page-link"-->
+<!--                   th:href="@{/blog/home(page = ${blogList.number + 1})}">Next</a>-->
+<!--            </li>-->
+<!--        </ul>-->
+<!--    </nav>-->
+    <div th:if = "${totalPages > 1}">
+        <div class = "row col-sm-10">
+            <div class = "col-sm-2">
+                Total Rows: [[${totalItems}]]
+            </div>
+
+            <div class = "col-sm-1">
+                <a th:if="${currentPage > totalPages}" th:href="@{'/blog/page/' + ${totalPages - 1}}">Previous</a>
+                <span th:unless="${currentPage < totalPages}">Previous</span>
+            </div>
+            <div class = "col-sm-1">
+					<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+						<a th:if="${currentPage != i}" th:href="@{'/blog/page/' + ${i}}">[[${i}]]</a>
+						<span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
+					</span>
+            </div>
+            <div class = "col-sm-1">
+                <a th:if="${currentPage < totalPages}" th:href="@{'/blog/page/' + ${currentPage + 1}}">Next</a>
+                <span th:unless="${currentPage < totalPages}">Next</span>
+            </div>
+
+            <div class="col-sm-1">
+                <a th:if="${currentPage < totalPages}" th:href="@{'/blog/page/' + ${totalPages}}">Last</a>
+                <span th:unless="${currentPage < totalPages}">Last</span>
+            </div>
+        </div>
+    </div>
+    <footer th:replace="layout :: footer"></footer>
+</div>
+</body>
+</html>
