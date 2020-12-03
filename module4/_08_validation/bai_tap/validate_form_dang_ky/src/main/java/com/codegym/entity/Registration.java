@@ -15,6 +15,7 @@ public class Registration {
     @Size(min = 5 , max = 45, message = "Length must be 5 and less than 45!")
     private String firstName;
 
+    @Author
     @NotBlank(message = "Please do not leave it empty!")
     @Size(min = 5 , max = 45, message = "Length must be 5 and less than 45!")
     private String lastName;
