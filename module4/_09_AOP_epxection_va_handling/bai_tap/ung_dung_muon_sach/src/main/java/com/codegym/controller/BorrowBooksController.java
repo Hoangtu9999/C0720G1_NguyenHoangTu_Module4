@@ -43,7 +43,7 @@ public class BorrowBooksController {
     @GetMapping("/borrow")
     public String borrow(@RequestParam Integer id, RedirectAttributes redirectAttributes) throws Exception {
         this.booksService.borrow(id);
-        redirectAttributes.addFlashAttribute("message", "Borrow Complete !"+ this.booksService.borrow(id));
+        redirectAttributes.addFlashAttribute("message", "Borrow Complete !"+ booksService.borrow(id));
         return "redirect:/home";
     }
 

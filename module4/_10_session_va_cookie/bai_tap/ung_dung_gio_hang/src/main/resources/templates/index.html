@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p th:if="${message}" th:text="${message}"></p>
+<table border="1" style="text-align: center">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th></th>
+
+    </tr>
+    <th:block th:each="row : ${productList}">
+        <tr>
+            <td th:text="${row.getProductId()}"></td>
+            <td th:text="${row.getNameProduct()}"></td>
+            <td th:text="${row.getQuantity()}"></td>
+            <td th:text="${row.getPrice()}"></td>
+            <td><a th:href="@{/product/formView/{id}(id =${row.getProductId()})}">View</a></td>
+        </tr>
+    </th:block>
+</table>
+<a th:href="@{/product/listCart}">List cart</a>
+</body>
+</html>
