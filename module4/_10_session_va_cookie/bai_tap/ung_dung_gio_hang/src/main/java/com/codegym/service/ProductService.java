@@ -9,4 +9,6 @@ public interface ProductService {
     List<ProductEntity> findAll();
 
     ProductEntity findById(Integer id);
+
+    void save(ProductEntity productEntity);
 }

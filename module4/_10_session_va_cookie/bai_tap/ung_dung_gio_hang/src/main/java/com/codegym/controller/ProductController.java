@@ -7,17 +7,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import sun.dc.pr.PRError;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 @RequestMapping({"","/product"})
-@SessionAttributes(value = "productList")
+@SessionAttributes("cartList")
 public class ProductController {
 
     @Autowired
     private ProductService productService;
 
+    @ModelAttribute("cartList")
+    public List<ProductEntity> setUpCart() {
+        return new ArrayList<>();
+    }
 
 
     @GetMapping("/home")
@@ -33,11 +39,36 @@ public class ProductController {
     }
 
     @GetMapping("/addToCart/{id}")
-    public String addToCart(@SessionAttribute(value = "productList") List<ProductEntity> productList ,@PathVariable Integer id , RedirectAttributes redirect){
+    public String addToCart(@ModelAttribute(value = "cartList") List<ProductEntity> cartList ,@PathVariable Integer id , RedirectAttributes redirect){
         ProductEntity productEntity = productService.findById(id);
-        productEntity.setQuantity(-1);
-        productList.add(productEntity);
+        productEntity.setQuantity(productEntity.getQuantity() - 1);
+        productService.save(productEntity);
+
+        int i = 1;
+        productEntity.setQuantity(i);
+        cartList.add(productEntity);
         redirect.addFlashAttribute("message","Add to cart successfully!");
         return "redirect:/home";
+    }
+    @GetMapping("/cart")
+    public String cart( Model model){//@ModelAttribute List<ProductEntity> productList,
+//        model.addAttribute("listCart", productList);
+        return "cart";
+    }
+
+
+    @GetMapping("/delete/{id}")
+    public String delete(@ModelAttribute(value = "cartList") List<ProductEntity> productList , @PathVariable Integer id,RedirectAttributes redirect){
+        ProductEntity productEntity = productService.findById(id);
+        productEntity.setQuantity(productEntity.getQuantity() + 1);
+        productService.save(productEntity);
+        for (ProductEntity product: productList) {
+            if (product.getProductId().equals(id)){
+                productList.remove(product);
+                redirect.addFlashAttribute("message", "delete successfully!");
+                break;
+            }
+        }
+    return "redirect:/home";
     }
 }

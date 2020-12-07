@@ -5,7 +5,8 @@
     <title>Title</title>
 </head>
 <body>
-<p th:if="${message}" th:text="${message}"></p>
+<h2>Product</h2>
+<p th:if="${message}" th:text="${message}" style="color: forestgreen;" ></p>
 <table border="1" style="text-align: center">
     <tr>
         <th>Id</th>
@@ -25,6 +26,6 @@
         </tr>
     </th:block>
 </table>
-<a th:href="@{/product/listCart}">List cart</a>
+<a th:href="@{/product/cart}">List cart</a>
 </body>
 </html>

@@ -23,4 +23,9 @@ public class ProductServiceImpl implements ProductService {
     public ProductEntity findById(Integer id) {
         return repository.findById(id).orElse(null);
     }
+
+    @Override
+    public void save(ProductEntity productEntity) {
+        repository.save(productEntity);
+    }
 }
