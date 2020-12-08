@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<input type="text" id="search">
+<button id="btnSearch">Search</button>
+
+<p id="tableList"></p>
+<!--<p id="contentBlog"></p>-->
+<!--<p id="categoryBlog"></p>-->
+<button id="bntLoadMore">Load more</button>
+</body>
+<script src="/js/jquery-3.5.1.min.js"></script>
+<script>
+    $("#btnSearch").click(function () {
+        let search = $("#search").val();
+        console.log(search);
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/blog/listSearch/" + search,
+            dataType: "json",
+            success: function (blog) {
+                data = "";
+                for (let i = 0; i < blog.length; i++) {
+                    data +=
+
+                        '<p>' + blog[i].id + '</p>' +
+                        '<p>' + blog[i].name + '</p>' +
+                        '<p>' + blog[i].content + '</p>' +
+                        '<p>' + blog[i].category.name + '</p>';
+                }
+                $("#tableList").html(data);
+                console.log(blog);
+
+            },
+            error: function (blog) {
+
+            }
+        });
+    });
+    $("#bntLoadMore").click(function () {
+        let page = 3;
+        $.ajax({
+            type: "GET",
+            url: "" + page,
+            dataType: "json",
+            success: function () {
+
+            }
+        });
+    });
+</script>
+</html>
