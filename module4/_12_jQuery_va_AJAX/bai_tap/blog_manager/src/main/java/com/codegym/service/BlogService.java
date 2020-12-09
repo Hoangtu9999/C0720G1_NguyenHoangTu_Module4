@@ -13,4 +13,5 @@ public interface BlogService {
 
     List<Blog> findAllByNameContaining(String name);
 
+    List<Blog> findAllScroll(Integer start, Integer limit);
 }

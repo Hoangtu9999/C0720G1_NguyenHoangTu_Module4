@@ -11,4 +11,7 @@ public interface BlogRepository extends JpaRepository<Blog, Integer> {
     List<Blog> findAllById(Integer cat_id);
 
     List<Blog> findAllByNameContaining(String name);
+
+    @Query(value = "select * from Blog limit ?1,?2", nativeQuery = true)
+    List<Blog> findAllScroll(Integer start, Integer limit);
 }

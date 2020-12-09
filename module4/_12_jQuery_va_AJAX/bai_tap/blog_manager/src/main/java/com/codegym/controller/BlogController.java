@@ -61,5 +61,10 @@ public class BlogController {
         ModelAndView modelAndView = new ModelAndView("search");
         return modelAndView;
     }
+    @GetMapping("/listLoadMore/{start}/{limit}")
+    public ResponseEntity<List<Blog>> getListBlogAjaxScroll(@PathVariable Integer start,@PathVariable Integer limit) {
+        List<Blog> blogList = this.blogService.findAllScroll(start, limit);
+        return new ResponseEntity<>(blogList, HttpStatus.OK);
+    }
 
 }

@@ -32,4 +32,9 @@ public class BlogServiceImpl implements BlogService {
     public List<Blog> findAllByNameContaining(String name) {
         return this.blogRepository.findAllByNameContaining(name);
     }
+
+    @Override
+    public List<Blog> findAllScroll(Integer start, Integer limit) {
+        return this.blogRepository.findAllScroll(start,limit);
+    }
 }
