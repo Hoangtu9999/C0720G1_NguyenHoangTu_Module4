@@ -1,9 +1,8 @@
 package com.codegym.service;
 
-
-
 import com.codegym.entity.AppUser;
 import com.codegym.entity.UserRole;
+import com.codegym.repository.AppRoleRepository;
 import com.codegym.repository.AppUserRepository;
 import com.codegym.repository.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,6 @@ import java.util.List;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-
     @Autowired
     private AppUserRepository appUserRepository;
 
@@ -28,32 +26,23 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private UserRoleRepository userRoleRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        AppUser appUser = this.appUserRepository.findByUserName(userName);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        AppUser appUser = this.appUserRepository.findByUserName(username);
 
         if (appUser == null) {
-            System.out.println("User not found! " + userName);
-            throw new UsernameNotFoundException("User " + userName + " was not found in the database");
+            throw new UsernameNotFoundException("User " + username + " was not found in the database");
         }
+        List<UserRole> userRoleList = this.userRoleRepository.findByAppUser(appUser);
 
-        System.out.println("Found User: " + appUser);
+        List<GrantedAuthority> authorityList = new ArrayList<>();
 
-        // [ROLE_USER, ROLE_ADMIN,..]
-        List<UserRole> userRoles = this.userRoleRepository.findByAppUser(appUser);
-
-        List<GrantedAuthority> grantList = new ArrayList<GrantedAuthority>();
-        if (userRoles != null) {
-            for (UserRole userRole : userRoles) {
-                // ROLE_USER, ROLE_ADMIN,..
+        if (userRoleList != null) {
+            for (UserRole userRole : userRoleList) {
                 GrantedAuthority authority = new SimpleGrantedAuthority(userRole.getAppRole().getRoleName());
-                grantList.add(authority);
+                authorityList.add(authority);
             }
         }
-
-        UserDetails userDetails = new User(appUser.getUserName(), //
-                appUser.getEncrytedPassword(), grantList);
-
+        UserDetails userDetails = new User(appUser.getUserName(), appUser.getEncrytedPassword(), authorityList);
         return userDetails;
     }
-
 }

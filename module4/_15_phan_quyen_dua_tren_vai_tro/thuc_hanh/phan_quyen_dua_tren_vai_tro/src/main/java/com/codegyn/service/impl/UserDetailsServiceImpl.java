@@ -1,6 +1,4 @@
-package com.codegym.service;
-
-
+package com.codegyn.service.impl;
 
 import com.codegym.entity.AppUser;
 import com.codegym.entity.UserRole;
@@ -41,7 +39,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         // [ROLE_USER, ROLE_ADMIN,..]
         List<UserRole> userRoles = this.userRoleRepository.findByAppUser(appUser);
 
-        List<GrantedAuthority> grantList = new ArrayList<GrantedAuthority>();
+        List<GrantedAuthority> grantList = new ArrayList<>();
         if (userRoles != null) {
             for (UserRole userRole : userRoles) {
                 // ROLE_USER, ROLE_ADMIN,..
@@ -50,7 +48,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             }
         }
 
-        UserDetails userDetails = new User(appUser.getUserName(), //
+        UserDetails userDetails = (UserDetails) new User(appUser.getUserName(), //
                 appUser.getEncrytedPassword(), grantList);
 
         return userDetails;
