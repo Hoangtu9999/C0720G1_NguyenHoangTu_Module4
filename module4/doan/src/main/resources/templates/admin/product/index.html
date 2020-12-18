@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/layout :: head">
+
+<body>
+
+<header th:replace="admin/layout :: header"></header>
+
+
+<div th:replace="admin/product/modal :: modal"></div>
+
+
+<div class="data-table-area">
+    <div class="container">
+        <button type="button" class="btn btn-primary pad-2" style="margin-bottom: 10px" data-toggle="modal"
+                data-target="#modalCreate">Add product
+        </button>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="data-table-list">
+                    <div class="table-responsive">
+                        <div id="data-table-basic_wrapper" class="dataTables_wrapper">
+                            <table id="data-table-basic" class="table table-striped dataTable" role="grid"
+                                   aria-describedby="data-table-basic_info">
+                                <thead>
+                                <tr role="row">
+                                    <th class="sorting_asc" tabindex="0" aria-controls="data-table-basic" rowspan="1"
+                                        colspan="1" aria-sort="ascending"
+                                        aria-label="Name: activate to sort column descending" style="width: 188px;">ID
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="data-table-basic" rowspan="1"
+                                        colspan="1" aria-label="Position: activate to sort column ascending"
+                                        style="width: 292px;">Name
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="data-table-basic" rowspan="1"
+                                        colspan="1" aria-label="Office: activate to sort column ascending"
+                                        style="width: 145px;">Picture
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="data-table-basic" rowspan="1"
+                                        colspan="1" aria-label="Age: activate to sort column ascending"
+                                        style="width: 54px;">Warranty Period
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="data-table-basic" rowspan="1"
+                                        colspan="1" aria-label="Start date: activate to sort column ascending"
+                                        style="width: 124px;">Quantity
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="data-table-basic" rowspan="1"
+                                        colspan="1" aria-label="Salary: activate to sort column ascending"
+                                        style="width: 116px;">Unit
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="data-table-basic" rowspan="1"
+                                        colspan="1" aria-label="Salary: activate to sort column ascending"
+                                        style="width: 116px;">Retail Price
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="data-table-basic" rowspan="1"
+                                        colspan="1" aria-label="Salary: activate to sort column ascending"
+                                        style="width: 116px;">Product Type
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="data-table-basic" rowspan="1"
+                                        colspan="1" aria-label="Salary: activate to sort column ascending"
+                                        style="width: 116px;">Producer
+                                    </th>
+                                    <th></th>
+                                    <th></th>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <th:block th:each="row : ${productList}">
+                                    <tr role="row" class="odd">
+                                        <th class="sorting_1" th:text="${row.getId()}"></th>
+                                        <td th:text="${row.getName()}"></td>
+                                        <td th:text="${row.getPicture()}"></td>
+                                        <td th:text="${row.getWarrantyPeriod()} + ' tháng'"></td>
+                                        <td th:text="${row.getQuantity()}"></td>
+                                        <td th:text="${row.getUnit()}"></td>
+                                        <td th:text="${#numbers.formatDecimal(row.getRetailPrice(), 0 ,'DEFAULT',0,'DEFAULT')}"></td>
+                                        <td th:text="${row.getProductType().getName()}"></td>
+                                        <td th:text="${row.getProducer().getName()}"></td>
+                                        <td>
+                                            <a class="btn btn-warning editProduct" th:data="${row.getId()}" >
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-danger deleteProduct" th:data="${row.getId()}"
+                                               th:href="@{/admin/product/delete/{id}(id= ${row.getId()})}">
+                                                <i class="far fa-trash-alt"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </th:block>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- End Sale Statistic area-->
+<footer th:replace="admin/layout :: footer"></footer>
+
+<script src="/admin/scrip-ajax/product.js"></script>
+</body>
+
+</html>

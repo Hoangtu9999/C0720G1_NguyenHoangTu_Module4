@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/layout :: head">
+
+<body>
+
+<header th:replace="admin/layout :: header"></header>
+
+
+<div th:replace="admin/customer/modal :: modal"></div>
+
+
+<div class="data-table-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="data-table-list">
+                    <div class="table-responsive">
+                        <div id="data-table-basic_wrapper" class="dataTables_wrapper">
+                            <button type="button" class="btn btn-primary pad-2" style="margin-bottom: 10px"
+                                    data-toggle="modal"
+                                    data-target="#modalCreate">Add customer
+                            </button>
+                            <div id="data-table-basic_filter row" class="dataTables_filter" style="margin-left: 650px">
+                                <form class="form-inline" th:action="@{/admin/customer/search}" th:method="get">
+<!--                                    <input class="form-control" type="search" name="keyword" placeholder="Search"-->
+<!--                                           aria-label="Search">-->
+<!--                                    <input class="form-control" type="date" name="dateStart"-->
+<!--                                           aria-label="Search">-->
+<!--                                    <input class="form-control" type="date" name="dateEnd"-->
+<!--                                           aria-label="Search">-->
+                                    <select name="type">
+                                        <option>-----------------------</option>
+                                        <option value="name">name</option>
+                                        <option value="address">address</option>
+                                        <option value="dateOfBirth">Date of birth</option>
+                                    </select>
+                                    <button type="submit">Search</button>
+
+<!--                                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
+                                </form>
+                            </div>
+                            <div th:if="${message}">
+                                <p th:text="${message}" style="color: red"></p>
+                            </div>
+                            <div th:if="${message1}">
+                                <p th:text="${message1}" style="color: green"></p>
+                            </div>
+                            <table id="data-table-basic" class="table table-striped dataTable" role="grid"
+                                   aria-describedby="data-table-basic_info">
+                                <thead>
+                                <tr role="row">
+                                    <th class="sorting_asc" tabindex="0" aria-controls="data-table-basic" rowspan="1"
+                                        colspan="1" aria-sort="ascending"
+                                        aria-label="Name: activate to sort column descending" style="width: 188px;">ID
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="data-table-basic" rowspan="1"
+                                        colspan="1" aria-label="Position: activate to sort column ascending"
+                                        style="width: 292px;">Name
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="data-table-basic" rowspan="1"
+                                        colspan="1" aria-label="Office: activate to sort column ascending"
+                                        style="width: 145px;">Birthday
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="data-table-basic" rowspan="1"
+                                        colspan="1" aria-label="Age: activate to sort column ascending"
+                                        style="width: 54px;">Gender
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="data-table-basic" rowspan="1"
+                                        colspan="1" aria-label="Start date: activate to sort column ascending"
+                                        style="width: 124px;">Id card
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="data-table-basic" rowspan="1"
+                                        colspan="1" aria-label="Salary: activate to sort column ascending"
+                                        style="width: 116px;">Email
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="data-table-basic" rowspan="1"
+                                        colspan="1" aria-label="Salary: activate to sort column ascending"
+                                        style="width: 116px;">Number phone
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="data-table-basic" rowspan="1"
+                                        colspan="1" aria-label="Salary: activate to sort column ascending"
+                                        style="width: 116px;">Address
+                                    </th>
+                                    <!--                                    <th class="sorting" tabindex="0" aria-controls="data-table-basic" rowspan="1"-->
+                                    <!--                                        colspan="1" aria-label="Salary: activate to sort column ascending"-->
+                                    <!--                                        style="width: 116px;">Username-->
+                                    <!--                                    </th>-->
+                                    <!--                                    <th class="sorting" tabindex="0" aria-controls="data-table-basic" rowspan="1"-->
+                                    <!--                                        colspan="1" aria-label="Salary: activate to sort column ascending"-->
+                                    <!--                                        style="width: 116px;">Password-->
+                                    <!--                                    </th>-->
+                                    <th></th>
+                                    <th></th>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <th:block th:each="row : ${customerList}">
+                                    <tr role="row" class="odd">
+                                        <th class="sorting_1" th:text="${row.getId()}"></th>
+                                        <td th:text="${row.getName()}"></td>
+                                        <td th:text="${row.getBirthday()}"></td>
+                                        <td  th:switch="${row.getGender()}">
+                                            <th:block th:case="true">Nam</th:block>
+                                            <th:block th:case="false">Nữ</th:block>
+                                        </td>
+                                        <td th:text="${row.getIdCard()}"></td>
+                                        <td th:text="${row.getEmail()}"></td>
+                                        <td th:text="${row.getNumberPhone()}"></td>
+                                        <td th:text="${row.getAddress()}"></td>
+                                        <!--                                        <td th:text="${row.getUser().getUsername()}"></td>-->
+                                        <!--                                        <td th:text="${row.getUser().getPassword()}"></td>-->
+                                        <td>
+                                            <a class="btn btn-warning editCustomer" th:data="${row.getId()}">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-danger deleteCustomer" th:data="${row.getId()}"
+                                               th:href="@{/admin/customer/delete/{id}(id= ${row.getId()})}">
+                                                <i class="far fa-trash-alt"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </th:block>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-end">
+                            <li class="page-item ">
+                                <a class="page-link" th:if="${customerList.hasPrevious()}"
+                                   th:href="@{/admin/customer/home(page = 0, keyword = ${keywordAfterCheck})}">First</a>
+                            </li>
+                            <li class="page-item ">
+                                <a class="page-link" tabindex="-1" th:if="${customerList.hasPrevious()}"
+                                   th:href="@{/admin/customer/home(page = ${customerList.number - 1}, keyword = ${keywordAfterCheck})}">Previous</a>
+                            </li>
+                            <th:block th:each="i: ${#numbers.sequence(0, customerList.totalPages - 1)}">
+                                <li class="page-item">
+                                    <a class="page-link"
+                                       th:href="@{/admin/customer/home(page = ${i}, keyword = ${keywordAfterCheck})}"
+                                       th:text="${i + 1}">
+                                    </a>
+                                </li>
+                            </th:block>
+                            <li class="page-item">
+                                <a class="page-link" th:if="${customerList.hasNext()}"
+                                   th:href="@{/admin/customer/home(page = ${customerList.number + 1}, keyword = ${keywordAfterCheck})}">Next</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" th:if="${customerList.hasNext()}"
+                                   th:href="@{/admin/customer/home(page = ${customerList.totalPages - 1}, keyword = ${keywordAfterCheck})}">Last</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- End Sale Statistic area-->
+<footer th:replace="admin/layout :: footer"></footer>
+
+<script src="/admin/scrip-ajax/customer.js"></script>
+</body>
+
+</html>
